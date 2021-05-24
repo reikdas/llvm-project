@@ -195,14 +195,28 @@ bool TemplateParameterList::hasAssociatedConstraints() const {
 }
 
 bool TemplateParameterList::shouldIncludeTypeForArgument(
-    const TemplateParameterList *TPL, unsigned Idx) {
+    const TemplateParameterList *TPL, unsigned int Idx,
+    const TemplateArgumentLoc ArgLoc) {
+  return TemplateParameterList::shouldIncludeTypeForArgument(
+      TPL, Idx, ArgLoc.getArgument());
+}
+
+bool TemplateParameterList::shouldIncludeTypeForArgument(
+    const TemplateParameterList *TPL, unsigned int Idx,
+    const TemplateArgument Arg) {
   if (!TPL || Idx >= TPL->size())
     return true;
   const NamedDecl *TemplParam = TPL->getParam(Idx);
   if (const auto *ParamValueDecl =
-          dyn_cast<NonTypeTemplateParmDecl>(TemplParam))
+          dyn_cast<NonTypeTemplateParmDecl>(TemplParam)) {
     if (ParamValueDecl->getType()->getContainedDeducedType())
       return true;
+    if (Arg.getKind() == TemplateArgument::Integral)
+      if (ParamValueDecl->getASTContext().getTypeSize(
+              ParamValueDecl->getType()) <
+          ParamValueDecl->getASTContext().getTypeSize(Arg.getAsType()))
+        return true;
+  }
   return false;
 }
 

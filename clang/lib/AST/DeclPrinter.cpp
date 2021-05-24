@@ -1101,9 +1101,9 @@ void DeclPrinter::printTemplateArguments(ArrayRef<TemplateArgument> Args,
     if (TemplOverloaded || !Params)
       Args[I].print(Policy, Out, /*IncludeType*/ true);
     else
-      Args[I].print(
-          Policy, Out,
-          TemplateParameterList::shouldIncludeTypeForArgument(Params, I));
+      Args[I].print(Policy, Out,
+                    TemplateParameterList::shouldIncludeTypeForArgument(
+                        Params, I, Args[I]));
   }
   Out << ">";
 }
@@ -1120,7 +1120,8 @@ void DeclPrinter::printTemplateArguments(ArrayRef<TemplateArgumentLoc> Args,
     else
       Args[I].getArgument().print(
           Policy, Out,
-          TemplateParameterList::shouldIncludeTypeForArgument(Params, I));
+          TemplateParameterList::shouldIncludeTypeForArgument(Params, I,
+                                                              Args[I]));
   }
   Out << ">";
 }

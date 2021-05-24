@@ -204,7 +204,12 @@ public:
              const PrintingPolicy &Policy, bool OmitTemplateKW = false) const;
 
   static bool shouldIncludeTypeForArgument(const TemplateParameterList *TPL,
-                                           unsigned Idx);
+                                           unsigned int Idx,
+                                           const TemplateArgument Arg);
+
+  static bool shouldIncludeTypeForArgument(const TemplateParameterList *TPL,
+                                           unsigned int Idx,
+                                           const TemplateArgumentLoc ArgLoc);
 };
 
 /// Stores a list of template parameters and the associated

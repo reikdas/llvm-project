@@ -987,7 +987,7 @@ static std::string printTemplateArgs(const PrintingPolicy &PrintingPolicy,
       OS << ", ";
     Arg.getArgument().print(
         PrintingPolicy, OS,
-        TemplateParameterList::shouldIncludeTypeForArgument(Params, I));
+        TemplateParameterList::shouldIncludeTypeForArgument(Params, I, Arg));
     First = false;
     I++;
   }

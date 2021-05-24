@@ -2032,9 +2032,9 @@ static void printTo(raw_ostream &OS, ArrayRef<TA> Args,
       if (!FirstArg)
         OS << Comma;
       // Tries to print the argument with location info if exists.
-      printArgument(
-          Arg, Policy, ArgOS,
-          TemplateParameterList::shouldIncludeTypeForArgument(TPL, ParmIndex));
+      printArgument(Arg, Policy, ArgOS,
+                    TemplateParameterList::shouldIncludeTypeForArgument(
+                        TPL, ParmIndex, Arg));
     }
     StringRef ArgString = ArgOS.str();
 

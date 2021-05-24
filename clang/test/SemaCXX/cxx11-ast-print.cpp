@@ -60,7 +60,3 @@ void g(int n) {
   [&buffer]() {}();  // CHECK: [&buffer]
 }
 
-template <class dummytype, dummytype h> struct I {};
-
-I<unsigned long, 0xb5026f5aa96619e9> J; // CHECK: template<> struct I<unsigned long, 13043109905998158313UL>
-                                        // CHECK: I<unsigned long, 13043109905998158313UL> J;
